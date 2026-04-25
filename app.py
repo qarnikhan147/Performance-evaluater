@@ -41,7 +41,14 @@ if st.button("Evaluate"):
     data = np.array([[attendance, assignment, quiz, mid, study_hours]])
     scaled = scaler.transform(data)
     prediction = model.predict(scaled)
-
+    proba = model.predict_proba(scaled)
+    
+    pass_prob = proba[0][1] * 100
+    fail_prob = proba[0][0] * 100
+    
+    st.write(f"**Probability of PASS:** {pass_prob:.2f}%")
+    st.write(f"**Probability of FAIL:** {fail_prob:.2f}%")
+    
     if prediction[0] == 1:
         st.success("🎉 Student Likely to PASS! Keep up the good work.")
     else:
